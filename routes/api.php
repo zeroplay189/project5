@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    Route::post('/login', [AuthController::class, 'apiLogin']);
+
+    return $request->user();
+});
+Route::post('/login', [AuthController::class, 'apiLogin']);
     Route::post('/register', [AuthController::class, 'apiRegister']);
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'apiLogout']);
     Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me']);
@@ -43,5 +51,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::middleware('auth:sanctum')->post('/banner/store', [BannerController::class, 'apiStore']);
     Route::middleware('auth:sanctum')->post('/banner/update/{id}', [BannerController::class, 'apiUpdate']);
     Route::middleware('auth:sanctum')->post('/banner/delete/{id}', [BannerController::class, 'apiDestroy']);
-    return $request->user();
-});
